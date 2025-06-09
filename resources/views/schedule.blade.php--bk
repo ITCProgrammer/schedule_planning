@@ -1,0 +1,41 @@
+@extends('layouts.main')
+@section('title', 'Schedule')
+
+@section('content')
+<div class="container mt-4">
+    <h2>Jadwal Produksi</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mesin</th>
+                @foreach ($tanggalKerja as $tgl)
+                    <th>{{ $tgl->format('d-M') }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($dataPerMesin as $mesin => $produksiPerTanggal)
+                <tr>
+                    <td>{{ $mesin }}</td>
+                    @foreach ($tanggalKerja as $tgl)
+                        @php
+                            $tanggalString = $tgl->toDateString();
+                            $data = $produksiPerTanggal[$tanggalString] ?? null;
+                            $itemCode = $data['item_code'] ?? null;
+                            $bgColor = $itemCode ? ($colorMap[$itemCode] ?? '#ccc') : '';
+                        @endphp
+                        <td>
+                            @if ($data)
+                                <div style="width: 20px; height: 20px; border-radius: 50%; background-color: {{ $bgColor }};"></div>
+                                {{ $data['text'] }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection
