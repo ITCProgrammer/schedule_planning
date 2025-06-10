@@ -94,6 +94,7 @@ class ListViewController extends Controller
                 p.ITEMTYPEAFICODE = 'KGF'
                 AND a2.VALUEDATE > '2025-05-26'
                 AND a3.VALUESTRING IS NULL
+                AND p.PROGRESSSTATUS != '6'
             GROUP BY
                 p.SUBCODE02,
                 p.SUBCODE03,
