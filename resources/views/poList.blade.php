@@ -382,6 +382,7 @@
           let subcode = $(this).data('subcode');
           let qty = $(this).data('qty');
           let date = $(this).data('date');
+          console.log(date);
           $('#typeSave').val("Po Greige");
           $('#inputSubcode').val(subcode);
           $('#txQty').val(qty);

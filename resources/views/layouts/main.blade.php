@@ -27,7 +27,7 @@
               <a class="navbar-brand text-white fw-bold fs-3" href="{{ route('home') }}">
                 <i class="fas fa-industry me-2"></i> MPS-ITTI
               </a>
-              <a class="navbar-brand text-white fw-bold fs-3" href="{{ route('poList') }}">
+              <a class="navbar-brand text-white fw-bold fs-3" href="{{ route('poForList') }}">
                 <i class="fas fa-calendar me-2"></i> Planning Schedule Priview
               </a>
               <button type="submit" class="btn btn-outline-light" id="btLogout">

@@ -9,7 +9,7 @@
 
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('poList') }}">PO With Greige Delivery Date</a>
+      <a class="nav-link" href="{{ route('poForList') }}">Forecast & PO Greige Plann</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{ route('scheList') }}">Schedule List Machine</a>

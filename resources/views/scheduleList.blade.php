@@ -9,7 +9,7 @@
 
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('poList') }}">PO With Greige Delivery Date</a>
+      <a class="nav-link" href="{{ route('poForList') }}">PO With Greige Delivery Date</a>
     </li>
     <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="{{ route('scheList') }}">Schedule List Machine</a>

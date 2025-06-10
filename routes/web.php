@@ -26,7 +26,7 @@ Route::middleware(['checklogin'])->group(function () {
 
     Route::get('/loadMesin', [MesinController::class, 'index'])->name('loadMesin');
 
-    Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
+    Route::get('/schedule', [ScheduleController::class, 'index'])->name('poForList');
     Route::get('/data_filter', [ScheduleController::class, 'dataFilter'])->name('schedule.filterdata');
 
     Route::get('/view2', [ListViewController::class, 'index'])->name('view2');
@@ -40,8 +40,5 @@ Route::middleware(['checklogin'])->group(function () {
     
     Route::get('/view', [ListViewController::class, 'index2'])->name('view');
     Route::get('/schedule/{item_code}', [ListViewController::class, 'getScheduleByItemCode'])->name('viewItem');
-
-    Route::get('/api/items', [ListViewController::class, 'getItems']);
-    Route::get('/api/items/{itemCode}/detail', [ListViewController::class, 'getItemDetail']);
 
 });

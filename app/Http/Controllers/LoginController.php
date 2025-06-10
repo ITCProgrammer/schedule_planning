@@ -43,6 +43,33 @@ class LoginController extends Controller
         ], 401);
     }
 
+    public function createAccount(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:50',
+            'password' => 'required|string|min:6',
+            'name'     => 'required|string|max:100',
+            'dept'     => 'required|string|max:100',
+            'role'     => 'required|string|max:50',
+        ]);
+    
+        $hashedPassword = Hash::make($request->password);
+    
+        $userData = [
+            'username' => $request->username,
+            'password' => $hashedPassword,
+            'name'     => $request->name,
+            'dept'     => $request->dept,
+            'role'     => $request->role,
+        ];
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'User created (simulasi)',
+            'data'    => $userData,
+        ]);
+    }
+
     public function logout()
     {
         Session::flush();
