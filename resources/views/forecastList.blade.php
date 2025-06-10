@@ -25,14 +25,14 @@
     </div>
   </div>
 
-  <div class="mb-3">
+  <!-- <div class="mb-3">
     <label for="viewModeSelect" class="form-label">Tampilan Data:</label>
     <select id="viewModeSelect" class="form-select" style="width: auto;">
       <option value="daily" selected>Per Hari</option>
       <option value="weekly">Per Minggu</option>
       <option value="monthly">Per Bulan</option>
     </select>
-  </div>
+  </div> -->
 
   
   <div id="resultContainer" class="mb-4"></div>
@@ -317,8 +317,8 @@
       dates.push(normalizeDate(d));
     }
 
-    // Qty Planning Map
-    let qtyPlannMap = {};
+    // Qty Planning Map Day
+    let qtyPlannMapDay = {};
     sqlData.forEach(function (row) {
       let start = new Date(row.start_date);
       let end = new Date(row.end_date);
@@ -329,8 +329,25 @@
         if (currentDate.getDay() === 0) continue;
         
         let dateKey = currentDate.toISOString().split("T")[0];
-        qtyPlannMap[dateKey] = (qtyPlannMap[dateKey] || 0) + dailyQty;
+        qtyPlannMapDay[dateKey] = (qtyPlannMapDay[dateKey] || 0) + dailyQty;
       }
+    });
+
+    // Qty Planning Map
+    let qtyPlannMap = {};
+    sqlData.forEach(function (row) {
+      let to = normalizeDate(new Date(row.end_date));
+      let qty = parseFloat(row.qty || 0);
+      let dateKey = to.toISOString().split("T")[0];
+      qtyPlannMap[dateKey] = (qtyPlannMap[dateKey] || 0) + qty;
+
+      // for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      //   let currentDate = normalizeDate(new Date(d));
+      //   if (currentDate.getDay() === 0) continue;
+        
+      //   let dateKey = currentDate.toISOString().split("T")[0];
+      //   qtyPlannMap[dateKey] = (qtyPlannMap[dateKey] || 0) + qty;
+      // }
     });
 
     // PO Map (Greige Delivery Date)
@@ -380,13 +397,23 @@
 
     html += '</tr></thead><tbody>';
 
+    // Planning row day
+    html += '<tr><td><strong>Qty Product Plann/Day</strong></td><td></td>';
+    dates.forEach(d => {
+      let dateKey = d.toISOString().split("T")[0];
+      const isSunday = d.getDay() === 0;
+      const val = qtyPlannMapDay[dateKey];
+      html += `<td class="${isSunday ? 'sunday-column' : ''}">${val ? val.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''}</td>`;
+    });
+    html += '</tr>';
+
     // Planning row
     html += '<tr><td><strong>Qty Planning</strong></td><td></td>';
     dates.forEach(d => {
       let dateKey = d.toISOString().split("T")[0];
       const isSunday = d.getDay() === 0;
       const val = qtyPlannMap[dateKey];
-      html += `<td class="${isSunday ? 'sunday-column' : ''}">${val ? val.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''}</td>`;
+      html += `<td class="${isSunday ? 'sunday-column' : ''}">${val ? '(' + val.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ')' : ''}</td>`;
     });
     html += '</tr>';
 
